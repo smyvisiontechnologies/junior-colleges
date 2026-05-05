@@ -12,7 +12,7 @@ const RecentAchievements = () => {
   const [volume, setVolume] = useState(1);
   const [showControls, setShowControls] = useState(true);
   const [controlsTimeout, setControlsTimeout] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [, setIsDragging] = useState(false);
   
   const videoRef = useRef(null);
   const videoContainerRef = useRef(null);
@@ -23,21 +23,17 @@ const RecentAchievements = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // Handle fullscreen change
     const handleFullscreenChange = () => {
       const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
       setIsFullscreen(!!fullscreenElement);
       
-      // Auto-rotate to landscape on mobile when entering fullscreen
       if (fullscreenElement && isMobile) {
-        // Safe check for screen orientation API
         if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
           window.screen.orientation.lock('landscape').catch(err => {
             console.log('Orientation lock not supported:', err);
           });
         }
       } else if (!fullscreenElement && isMobile) {
-        // Safe check for screen orientation API
         if (window.screen && window.screen.orientation && window.screen.orientation.unlock) {
           window.screen.orientation.unlock();
         }
@@ -54,7 +50,6 @@ const RecentAchievements = () => {
     };
   }, [isMobile]);
 
-  // Video event listeners
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -80,7 +75,6 @@ const RecentAchievements = () => {
     };
   }, []);
 
-  // Hide controls after inactivity
   const handleMouseMove = () => {
     if (!isMobile) {
       setShowControls(true);
@@ -92,7 +86,6 @@ const RecentAchievements = () => {
     }
   };
 
-  // Play/Pause
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -104,7 +97,6 @@ const RecentAchievements = () => {
     }
   };
 
-  // Fullscreen with orientation handling
   const toggleFullscreen = async () => {
     if (videoContainerRef.current) {
       if (!isFullscreen) {
@@ -131,7 +123,6 @@ const RecentAchievements = () => {
     }
   };
 
-  // Seek
   const handleSeek = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     let x;
@@ -149,7 +140,6 @@ const RecentAchievements = () => {
     }
   };
 
-  // Touch start for mobile seeking
   const handleSeekStart = () => {
     setIsDragging(true);
   };
@@ -158,7 +148,6 @@ const RecentAchievements = () => {
     setIsDragging(false);
   };
 
-  // Volume
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
@@ -175,24 +164,20 @@ const RecentAchievements = () => {
     }
   };
 
-  // Format time (mm:ss)
   const formatTime = (time) => {
-    if (isNaN(time)) return "0:00";
+    if (isNaN(time)) return '0:00';
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Progress percentage
   const progressPercentage = duration ? (currentTime / duration) * 100 : 0;
 
-  // Touch handlers for mobile
   const handleVideoTouch = (e) => {
     e.stopPropagation();
     togglePlay();
   };
 
-  // Show controls on mobile tap
   const handleVideoTap = () => {
     if (isMobile) {
       setShowControls(true);
@@ -204,71 +189,67 @@ const RecentAchievements = () => {
     }
   };
 
-  // SNR Results - Senior Batch 2025-26
   const snrRanks = [
     {
       id: 1,
-      position: "1st Rank",
-      title: "District Topper - MPC",
-      studentName: "D. Vijaya Syamala",
-      marks: "985/1000",
-      percentage: "98.5%",
-      course: "MPC WITH MAINS",
-      image: "/images/rank1.png",
-      color: "#FFD700",
-      description: "Secured 1st Rank in District with outstanding performance in MPC stream"
+      position: '1st Rank',
+      title: 'District Topper - MPC',
+      studentName: 'D. Vijaya Syamala',
+      marks: '985/1000',
+      percentage: '98.5%',
+      course: 'MPC WITH MAINS',
+      image: '/images/rank1.png',
+      color: '#FFD700',
+      description: 'Secured 1st Rank in District with outstanding performance in MPC stream'
     },
     {
       id: 2,
-      position: "2nd Rank",
-      title: "State Level Achiever",
-      studentName: "B.Yuva Sri",
-      marks: "984/1000",
-      percentage: "98.4%",
-      course: "BIPC WITH NEET",
-      image: "/images/rank2.jpg",
-      color: "#C0C0C0",
-      description: "Secured 2nd Rank in State EAPCET examination"
+      position: '2nd Rank',
+      title: 'State Level Achiever',
+      studentName: 'B.Yuva Sri',
+      marks: '984/1000',
+      percentage: '98.4%',
+      course: 'BIPC WITH NEET',
+      image: '/images/rank2.jpg',
+      color: '#C0C0C0',
+      description: 'Secured 2nd Rank in State EAPCET examination'
     }
   ];
 
-  // JNR Results - Junior Batch 2025-26
   const jnrRanks = [
     {
       id: 1,
-      position: "1st Rank",
-      title: "Junior MPC Topper",
-      studentName: "D.Angala Jahnavi",
-      marks: "465/470",
-      percentage: "98.94%",
-      course: "MPC",
-      image: "/images/jnr-rank1.jpg",
-      color: "#FFD700",
-      description: "Secured 1st Rank in Junior MPC with exceptional performance"
+      position: '1st Rank',
+      title: 'Junior MPC Topper',
+      studentName: 'D.Angala Jahnavi',
+      marks: '465/470',
+      percentage: '98.94%',
+      course: 'MPC',
+      image: '/images/jnr-rank1.jpg',
+      color: '#FFD700',
+      description: 'Secured 1st Rank in Junior MPC with exceptional performance'
     },
     {
       id: 2,
-      position: "2nd Rank",
-      title: "Junior BIPC Achiever",
-      studentName: "D. Bhargavi Satya Sri",
-      marks: "464/470",
-      percentage: "98.72%",
-      course: "MPC",
-      image: "/images/jnr-rank2.jpg",
-      color: "#C0C0C0",
-      description: "Secured 2nd Rank in Junior BIPC with NEET focus"
+      position: '2nd Rank',
+      title: 'Junior BIPC Achiever',
+      studentName: 'D. Bhargavi Satya Sri',
+      marks: '464/470',
+      percentage: '98.72%',
+      course: 'MPC',
+      image: '/images/jnr-rank2.jpg',
+      color: '#C0C0C0',
+      description: 'Secured 2nd Rank in Junior BIPC with NEET focus'
     }
   ];
 
   const currentRanks = activeTab === 'snr' ? snrRanks : jnrRanks;
 
-  // Open lightbox
   const openLightbox = (imageSrc, studentName) => {
     setLightboxImage({ src: imageSrc, alt: studentName });
     document.body.style.overflow = 'hidden';
   };
 
-  // Close lightbox
   const closeLightbox = () => {
     setLightboxImage(null);
     document.body.style.overflow = 'auto';
@@ -276,13 +257,20 @@ const RecentAchievements = () => {
 
   return (
     <div style={styles.container}>
-      <Helmet>
-        <title>Achievements | Best Junior College in Rajahmundry | Vegha Junior College Results 2026</title>
-        <meta name="description" content="Vegha Junior College achievements - SNR and JNR results 2025-26 batch. Top ranks in MPC, BIPC." />
-        <meta name="keywords" content="Vegha junior college achievements, inter college results rajahmundry, snr results, jnr results" />
-      </Helmet>
+      <Helmet
+        title="Achievements | Best Junior College in Rajahmundry | Megha Junior College Results 2026"
+        meta={[
+          {
+            name: 'description',
+            content: 'Megha Junior College achievements - SNR and JNR results 2025-26 batch. Top ranks in MPC, BIPC.'
+          },
+          {
+            name: 'keywords',
+            content: 'megha junior college achievements, inter college results rajahmundry, snr results, jnr results'
+          }
+        ]}
+      />
 
-      {/* Hero Section */}
       <section style={styles.hero}>
         <div style={styles.heroBg}></div>
         <div style={styles.heroPattern}></div>
@@ -302,9 +290,8 @@ const RecentAchievements = () => {
         </div>
       </section>
 
-      {/* Tab Switcher */}
       <section style={styles.tabSection}>
-        <div style={styles.tabContainer}>
+        <div className="tab-container" style={styles.tabContainer}>
           <button
             className={`tab-btn ${activeTab === 'snr' ? 'active' : ''}`}
             style={{ ...styles.tabBtn, ...(activeTab === 'snr' ? styles.tabBtnActive : {}) }}
@@ -324,7 +311,6 @@ const RecentAchievements = () => {
         </div>
       </section>
 
-      {/* Stamp Animation Results Grid */}
       <section style={styles.resultsSection}>
         <div style={styles.sectionHeader}>
           <div style={styles.sectionBadge}>2025-26 Batch</div>
@@ -375,7 +361,7 @@ const RecentAchievements = () => {
               <h3 style={styles.stampName}>{rank.studentName}</h3>
               <p style={styles.stampPosition}>{rank.position}</p>
               <p style={styles.stampCourse}>{rank.course}</p>
-              <div style={styles.stampStats}>
+              <div className="stamp-stats" style={styles.stampStats}>
                 <span style={styles.stampMarks}>{rank.marks}</span>
                 <span style={styles.stampPercentage}>{rank.percentage}</span>
               </div>
@@ -385,7 +371,6 @@ const RecentAchievements = () => {
         </div>
       </section>
 
-      {/* Video Showcase Section with Full Controls */}
       <section style={styles.videoSection}>
         <div style={styles.videoContainer}>
           <div style={styles.videoHeader}>
@@ -395,9 +380,10 @@ const RecentAchievements = () => {
           
           <div 
             ref={videoContainerRef} 
+            className="video-wrapper"
             style={styles.videoWrapper}
             onMouseMove={!isMobile ? handleMouseMove : undefined}
-            onTouchStart={isMobile ? () => handleVideoTap() : undefined}
+            onTouchStart={isMobile ? handleVideoTap : undefined}
           >
             <video
               ref={videoRef}
@@ -411,8 +397,7 @@ const RecentAchievements = () => {
               Your browser does not support the video tag.
             </video>
             
-            {/* Video Controls */}
-            <div style={{ ...styles.videoControls, opacity: showControls ? 1 : 0, pointerEvents: showControls ? 'auto' : 'none' }}>
+            <div className="video-controls" style={{ ...styles.videoControls, opacity: showControls ? 1 : 0, pointerEvents: showControls ? 'auto' : 'none' }}>
               <div 
                 style={styles.progressContainer} 
                 onClick={handleSeek}
@@ -422,15 +407,15 @@ const RecentAchievements = () => {
                 ref={progressBarRef}
               >
                 <div style={{ ...styles.progressBar, width: `${progressPercentage}%` }}></div>
-                <div style={{ ...styles.progressHandle, left: `${progressPercentage}%` }}></div>
+                <div className="progress-handle" style={{ ...styles.progressHandle, left: `${progressPercentage}%` }}></div>
               </div>
               
-              <div style={styles.controlsRow}>
-                <button onClick={togglePlay} style={styles.controlBtn}>
+              <div className="controls-row" style={styles.controlsRow}>
+                <button onClick={togglePlay} style={styles.controlBtn} className="control-btn">
                   {isPlaying ? <PauseIconSvg /> : <PlayIconSvg />}
                 </button>
                 
-                <div style={styles.timeDisplay}>
+                <div className="time-display" style={styles.timeDisplay}>
                   {formatTime(currentTime)} / {formatTime(duration)}
                 </div>
                 
@@ -451,7 +436,7 @@ const RecentAchievements = () => {
                   </div>
                 )}
                 
-                <button onClick={toggleFullscreen} style={styles.controlBtn}>
+                <button onClick={toggleFullscreen} style={styles.controlBtn} className="control-btn">
                   {isFullscreen ? <CompressIconSvg /> : <ExpandIconSvg />}
                 </button>
               </div>
@@ -460,7 +445,6 @@ const RecentAchievements = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section style={styles.statsSection}>
         <div style={styles.statsContainer}>
           <div className="stats-grid" style={styles.statsGrid}>
@@ -488,11 +472,10 @@ const RecentAchievements = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section style={styles.ctaSection}>
         <div style={styles.ctaContent}>
           <h2 style={styles.ctaTitle}>Be the Next Success Story</h2>
-          <p style={styles.ctaText}>Join Vegha Junior College and achieve your dreams with us</p>
+          <p style={styles.ctaText}>Join Megha Junior College and achieve your dreams with us</p>
           <Link to="/contact" style={styles.ctaBtn}>
             Enroll Now
             <ArrowRightIconSvg />
@@ -500,7 +483,6 @@ const RecentAchievements = () => {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
       {lightboxImage && (
         <div style={styles.lightbox} onClick={closeLightbox}>
           <div style={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
@@ -550,11 +532,8 @@ const RecentAchievements = () => {
         
         .stamp-image-wrapper:hover .stamp-overlay { opacity: 1; }
         .stat-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
-        
-        /* Video Controls */
         .video-wrapper:hover .video-controls { opacity: 1 !important; }
         
-        /* Fullscreen styles */
         .video-wrapper:-webkit-full-screen {
           width: 100%;
           height: 100%;
@@ -579,7 +558,6 @@ const RecentAchievements = () => {
           object-fit: contain;
         }
         
-        /* Responsive */
         @media (min-width: 769px) {
           .stamp-grid {
             display: grid !important;
@@ -619,7 +597,6 @@ const RecentAchievements = () => {
           .time-display { font-size: 0.75rem !important; }
         }
         
-        /* Landscape orientation for fullscreen on mobile */
         @media (orientation: landscape) and (max-width: 768px) {
           .video-wrapper:fullscreen .video-controls {
             bottom: 0;
@@ -634,8 +611,6 @@ const RecentAchievements = () => {
     </div>
   );
 };
-
-// ==================== SVG ICONS ====================
 
 const PlayIconSvg = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -682,8 +657,7 @@ const ArrowRightIconSvg = () => (
   </svg>
 );
 
-// Helmet Component
-const Helmet = ({ children, title, meta }) => {
+const Helmet = ({ title, meta }) => {
   React.useEffect(() => {
     if (title) document.title = title;
     const tags = [];
@@ -702,7 +676,6 @@ const Helmet = ({ children, title, meta }) => {
   return null;
 };
 
-// Styles
 const styles = {
   container: { fontFamily: "'Inter', 'Poppins', system-ui, sans-serif", overflowX: 'hidden', width: '100%' },
   hero: { background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%)', padding: '120px 24px 80px', textAlign: 'center', position: 'relative', overflow: 'hidden' },

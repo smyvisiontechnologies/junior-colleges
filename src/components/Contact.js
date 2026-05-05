@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -18,12 +18,7 @@ const Contact = () => {
     address: "Vegha Junior College, Near Ramakrishna Theatre, Danavaipeta, Rajahmundry - 533103, Andhra Pradesh"
   };
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+
 
   const handleInputChange = (e) => {
     setFormData({
